@@ -1,0 +1,26 @@
+.notification {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 2em;
+	display: flex;
+
+	
+	&--hidden {
+		opacity: 0;
+	}
+	
+	&--active {
+		opacity: 1;
+	}	
+}
+
+.notification__hide {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: transparent;
+	width: 1em;
+	height: 1em;
+	border: 0;
+}
