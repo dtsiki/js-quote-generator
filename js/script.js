@@ -3,19 +3,20 @@
 	REMOVED: 'Quote removed from your favourite quotes',
 	CLEAR: 'You have no more favourite quotes :(',
 	EMPTY: 'Your favs list is already empty',
-	NULL: 'You have no favourite quotes yet'
+	NULL: 'You have no favourite quotes yet',
+	ALREADY: 'Quote already added to favs'
 }
 
 const quotes = [
 	'The right time is always now',
 	'Think like a proton: always positive',
-	'Do what yo can with what you have where you are',
+	'Do what you can with what you have where you are',
 	'Be a light in this world',
 	'Life is more than one big to do list',
 	'Done is better than perfect',
 	'You are stronger than you think',
-	'There is no failure you either win or learn',
-	'Growing Takes Time',
+	'There is no failure: you either win or learn',
+	'Growing takes time',
 	'Try to be a rainbow in someone’s cloud',
 	'Life has no limitations, except the ones you make',
 	'The future belongs to those who believe in the beauty of their dreams',
@@ -24,7 +25,7 @@ const quotes = [
 	'Keep calm and keep learning',
 	'A little progress each day adds up to big results',
 	'Positive thinking must be followed by positive doing',
-	'Delete the negative; accentuate the positive',
+	'Delete the negative. Accentuate the positive',
 	'Prepare to win the night before',
 	'Life is not about finding yourself. Life is about creating yourself',
 	'All progress takes place outside the comfort zone',
@@ -70,7 +71,6 @@ const modalContent = document.querySelector(".modal__content");
 const modalTitle = document.querySelector(".modal__title");
 
 const openModal = () => {
-	console.log("Modal open");
 	modalContainer.classList.remove("modal--hidden");
 	modalContainer.classList.add("modal--active");
 	//quote.classList.add("is-blurred");
@@ -78,7 +78,6 @@ const openModal = () => {
 }
 
 const closeModal = () => {
-	console.log("Modal close");
 	modalContainer.classList.remove("modal--active");
 	modalContainer.classList.add("modal--hidden");
 	//quote.classList.remove("is-blurred");
@@ -88,6 +87,13 @@ const closeModal = () => {
 let favs = [];
 let formatedFavs = [];
 let currentQuoteNumber = [];
+
+const loadFavs = () =>{
+    const retrievedData = localStorage.getItem("favs");
+    if (localStorage.length != 0){
+        favs = JSON.parse(JSON.stringify(JSON.parse(retrievedData)));
+    }
+}
 
 const getRandomNumber = (min, max) => {
     return Math.floor(Math.random()*(max - min) + min);
@@ -103,14 +109,21 @@ const getRandomQuote = () => {
 }
 
 const addToFav = () => {
-	checkQuote(quotes[currentQuoteNumber]) ? console.log('Quote id=' + currentQuoteNumber + ' already added to favs') : favs.push(quotes[currentQuoteNumber]);
-	addNotification(messages.ADDED);
+	if(checkQuote(quotes[currentQuoteNumber])) {
+		addNotification(messages.ALREADY);
+	} else {
+		favs.push(quotes[currentQuoteNumber]);
+		localStorage.setItem("favs", JSON.stringify(favs));
+		addNotification(messages.ADDED);
+	}
 	reloadFavsContent();
 }
 
 const removeFromFav = (quote) => {
 	let removingQuote = quote.getAttribute("quote")
 	favs.splice(favs.indexOf(removingQuote), 1);
+	localStorage.clear();
+	localStorage.setItem("favs", JSON.stringify(favs));
 	addNotification(messages.REMOVED);
 	reloadFavsContent();
 }
@@ -124,6 +137,7 @@ const clearFavs = () => {
 		favs = [];
 		addNotification(messages.CLEAR);
 	} else addNotification(messages.EMPTY);
+	localStorage.clear();
 }
 
 const showNewQuote = () => {
@@ -136,7 +150,6 @@ const checkQuote = (quote) => {
 }
 
 const makeFavsContent = () => {
-	console.log(favs);
 	if(favs.length != 0) {
 		favs.map(favItem => {
 			modalContent.innerHTML += `
@@ -146,7 +159,7 @@ const makeFavsContent = () => {
 			</div>
 			`;
 		});
-	} else modalContent.innerHTML += `<div class="fav__item fav__item--empty">${messages.NULL}</div>`;
+	} else modalContent.innerHTML += `<div class="fav__empty">${messages.NULL}</div>`;
 }
 
 const reloadFavsContent = () =>{
@@ -156,11 +169,13 @@ const reloadFavsContent = () =>{
 
 const initialModal = () => {
 	modalTitle.innerHTML = 'Favourite quotes';
-	modalContent.innerHTML += `<div class="fav__empty">${messages.NULL}</div>`;
+	if(favs.length != 0) modalContent.innerHTML += `<div class="fav__empty">${messages.NULL}</div>`;
 }
 
 window.onload = function() {
 	initialModal();
+	loadFavs();
+	makeFavsContent();
     getRandomQuote();
 	fav.onclick = showFavs;
 	save.onclick = addToFav;
