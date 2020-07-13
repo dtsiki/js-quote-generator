@@ -11,26 +11,27 @@
 </head>
 <body>
 <div class="modal modal--hidden">
+	<div class="modal__overlay"></div>
+	<button class="modal__close">Close modal</button>
 	<div class="modal__box">
 		<div class="modal__title"></div>
 		<div class="modal__content"></div>
-		<button class="modal__close">Close modal</button>
 	</div>
 </div>
 
 <div class="control-panel">
-	<button class="control control--show-favs">Show fav</button>
-	<button class="control control--save-quote">Add to fav</button>
-	<button class="control control--clear-favs">Clear favs</button>
-	<button class="control control--new-quote">New quote</button>
+	<button class="control control--show-favs">Show favs</button>
+	<button class="control control--save-quote">Add to favs</button>
+	<button class="control control--clear-favs control--hidden">Clear favs</button>
+	<button class="control control--new-quote">Next quote</button>
 </div>
 
-<div class="container">
-	<div class="quote"></div>
+<div class="quote">
+	<div class="quote__content"></div>
 </div>
 
 <div class="notification notification--hidden">
-	<div class="notification__content">Notification</div>
+	<div class="notification__content">Notification message</div>
 	<button class="notification__hide">Hide notification</button>
 </div>
 <script src="script.js"></script>
