@@ -151,6 +151,7 @@ const clearFavs = () => {
 const showNewQuote = () => {
 	quote.innerHTML = '';
 	getRandomQuote();
+	setRandomBackgroundColor();
 }
 
 const checkQuote = (quote) => {
