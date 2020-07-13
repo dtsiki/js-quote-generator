@@ -180,8 +180,17 @@ const initialModal = () => {
 	if(favs.length != 0) modalContent.innerHTML += `<div class="fav__empty">${messages.NULL}</div>`;
 }
 
+function setRandomBackgroundColor() {
+    let x = 256;
+    let y = Math.floor(Math.random() * 256);
+    let z = Math.floor(Math.random() * 256);
+    let bgColor = "rgb(" + x + "," + y + "," + z + ")";
+    document.body.style.background = bgColor;
+}
+
 window.onload = function() {
 	initialModal();
+	setRandomBackgroundColor();
 	loadFavs();
 	makeFavsContent();
     getRandomQuote();
