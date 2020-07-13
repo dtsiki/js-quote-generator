@@ -37,7 +37,15 @@ const quotes = [
 	'Create a life you can`t wait to wake up to',
 	'You can',
 	'Be a warrior, not a worrier',
-	'If your dream don`t scare you the aren`t big enough'
+	'If your dream don`t scare you the aren`t big enough',
+	'All we have is now',
+	'Keep moving',
+	'Enjoy today',
+	'Just say yikes and move on',
+	'Don’t be a rock when you really are a gem',
+	'Better an oops than a what if',
+	'Your only limit is you',
+	'There is no change where is no action'
 ]
 
 const quotesCount = Object.keys(quotes).length;
